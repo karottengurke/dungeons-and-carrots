@@ -1,5 +1,7 @@
 namespace SpriteKind {
     export const speedpotion = SpriteKind.create()
+    export const heart = SpriteKind.create()
+    export const Herz = SpriteKind.create()
 }
 namespace myTiles {
     //% blockIdentity=images._tile
@@ -78,7 +80,30 @@ f f d d d d d d d d d f 7 7 7 7
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 `
+    //% blockIdentity=images._tile
+    export const tile4 = img`
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 6 5 5 7 7 7 7 7 7 7 6 5 7 7 7 
+7 7 6 6 5 7 7 7 7 7 7 7 6 5 7 7 
+7 7 7 7 6 5 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 6 5 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 6 5 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 6 5 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 6 5 7 7 7 5 7 7 7 7 7 7 7 
+7 7 7 7 6 5 7 5 7 7 7 7 7 7 7 7 
+7 7 7 7 7 6 5 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
+`
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Herz, function (sprite, otherSprite) {
+    herzsprite.destroy()
+    info.changeLifeBy(1)
+})
 sprites.onCreated(SpriteKind.speedpotion, function (sprite) {
     tiles.placeOnRandomTile(sprite, myTiles.tile3)
 })
@@ -86,6 +111,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.speedpotion, function (sprite, o
     controller.moveSprite(spieler, 125, 125)
     speedotion.destroy()
     info.startCountdown(10)
+})
+sprites.onCreated(SpriteKind.Herz, function (sprite) {
+    tiles.placeOnRandomTile(sprite, myTiles.tile4)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
@@ -386,7 +414,7 @@ d . . f . . . . . . . . . . . .
             projectile.setVelocity(0, 200)
         }
     }
-    projectile.follow(neuerGegner, 10000)
+    projectile.follow(neuerGegner, 10000000000000)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.destroy()
@@ -405,6 +433,7 @@ sprites.onCreated(SpriteKind.Enemy, function (sprite) {
 let neuerGegner: Sprite = null
 let projectile: Sprite = null
 let speedotion: Sprite = null
+let herzsprite: Sprite = null
 let spieler: Sprite = null
 scene.setBackgroundImage(img`
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
@@ -529,7 +558,7 @@ scene.setBackgroundImage(img`
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
 `)
 tiles.setTilemap(tiles.createTilemap(
-            hex`1000100004040404040404040404040404040404040101010103010101030101010105040401020101010301040401030303030404030301030106010104020101010104040104030501040105040101010103040404040101010401010303010106030404030101010102010101030404010304040101010404040101020101040303040401010604010101010101010101010404010201010105010104040103010204040101010304010103040102060101040401030103030301040401010101010404010402010601020101030404040104040304040401010101060404010101040401010504010103030101010105030404040404040404040404040404040404`,
+            hex`1000100004040404040404040404040404040404040101010103010101030101010105040401020101010301040401030303030404030301030106010104020107010104040104030501040105040101010103040404040701010401010303010106030404030101010102010101030404010304040101010404040101020101040303040401010604010101010101010101010404010201010105010104040103010204040701010304010703040102060101040401030103030301040401010101010404010402010601020101030404040104040304040401010101060404010101040401010504010107030101010105030404040404040404040404040404040404`,
             img`
 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
 2 . . . . . . . . . . . . . . 2 
@@ -548,7 +577,7 @@ tiles.setTilemap(tiles.createTilemap(
 2 . . . 2 . . . . . . . . . . 2 
 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
 `,
-            [myTiles.tile0,sprites.castle.tileGrass1,sprites.castle.tileGrass2,sprites.castle.tileGrass3,myTiles.tile1,myTiles.tile2,myTiles.tile3],
+            [myTiles.tile0,sprites.castle.tileGrass1,sprites.castle.tileGrass2,sprites.castle.tileGrass3,myTiles.tile1,myTiles.tile2,myTiles.tile3,myTiles.tile4],
             TileScale.Sixteen
         ))
 spieler = sprites.create(img`
@@ -574,26 +603,6 @@ tiles.placeOnRandomTile(spieler, sprites.castle.tileGrass2)
 controller.moveSprite(spieler, 100, 100)
 spieler.setFlag(SpriteFlag.StayInScreen, true)
 info.setLife(3)
-game.onUpdateInterval(10000, function () {
-    speedotion = sprites.create(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . f f f . . . . . . . 
-. . . . . f 4 4 e f . . . . . . 
-. . . . . . f e f . . . . . . . 
-. . . . . . f . f . . . . . . . 
-. . . . . . f . f . . . . . . . 
-. . . . . f 5 5 5 f . . . . . . 
-. . . . f 5 5 5 5 5 f . . . . . 
-. . . f 5 5 1 5 5 5 5 f . . . . 
-. . f 5 5 1 5 5 5 5 5 5 f . . . 
-. . f 5 5 1 5 5 5 5 5 5 f . . . 
-. . . f 5 5 5 5 5 5 5 f . . . . 
-. . . . f f f f f f f . . . . . 
-. . . . . . . . . . . . . . . . 
-`, SpriteKind.speedpotion)
-})
 game.onUpdateInterval(5000, function () {
     neuerGegner = sprites.create(img`
 . . . . . 5 5 5 5 . . . . . . . 
@@ -613,4 +622,44 @@ game.onUpdateInterval(5000, function () {
 . . . . e e e . e e e . . . . . 
 . . . . e e e . e e e . . . . . 
 `, SpriteKind.Enemy)
+})
+game.onUpdateInterval(15000, function () {
+    herzsprite = sprites.create(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . f f f . . f f f . . . . 
+. . . f 2 2 2 f f 2 2 2 f . . . 
+. . f 2 2 2 2 2 2 2 2 2 2 f . . 
+. . f 2 2 2 1 2 2 2 2 2 2 f . . 
+. . f 2 2 1 2 2 2 2 2 2 2 f . . 
+. . . f 2 1 2 2 2 2 2 2 f . . . 
+. . . f 2 2 2 2 2 2 2 2 f . . . 
+. . . . f 2 2 2 2 2 2 f . . . . 
+. . . . . f 2 2 2 2 f . . . . . 
+. . . . . . f 2 2 f . . . . . . 
+. . . . . . . f f . . . . . . . 
+`, SpriteKind.Herz)
+})
+game.onUpdateInterval(15000, function () {
+    speedotion = sprites.create(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . f f f . . . . . . . 
+. . . . . f 4 4 e f . . . . . . 
+. . . . . . f e f . . . . . . . 
+. . . . . . f . f . . . . . . . 
+. . . . . . f . f . . . . . . . 
+. . . . . f 5 5 5 f . . . . . . 
+. . . . f 5 5 5 5 5 f . . . . . 
+. . . f 5 5 1 5 5 5 5 f . . . . 
+. . f 5 5 1 5 5 5 5 5 5 f . . . 
+. . f 5 5 1 5 5 5 5 5 5 f . . . 
+. . . f 5 5 5 5 5 5 5 f . . . . 
+. . . . f f f f f f f . . . . . 
+. . . . . . . . . . . . . . . . 
+`, SpriteKind.speedpotion)
 })
